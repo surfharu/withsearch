@@ -1,10 +1,11 @@
-이 프로젝트는 Elasticsearch, fscrawler 를 활용한 문서 검색시스템 샘플입니다.
+이 프로젝트는 Elasticsearch, fscrawler 를 활용한 문서 검색시스템 샘플입니다.  
 보다 자세한 내용은 [Elasticsearch, fscrawler 기반 문서 검색 시스템 구축하기](https://surfharu.github.io/posts/tool-4/)를 참조해 주세요.
 
 ## Prerequisites
 - docker
 
 ## Structure
+
 | **Folder & File** | **Description** 
 | --- | --- | --- |
 | **elasticsearch** | 한국어 형태 분석기를 포함한 elasticsearch 이미지 생성하기 위한 폴더 | 
