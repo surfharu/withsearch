@@ -6,8 +6,8 @@
 
 ## Structure
 
-| **Folder & File** | **Description** 
-| --- | --- | --- |
+| **Folder & File** | **Description** |
+| --- | --- | 
 | **elasticsearch** | 한국어 형태 분석기를 포함한 elasticsearch 이미지 생성하기 위한 폴더 | 
 | **config** | 환경 설정 파일 (elasticsearch & fscrawler) |   
 | **web** | 검색을 위한 web 페이지 (nextjs로 구성) |  
