@@ -1,0 +1,15 @@
+*.out
+*.swp
+*.pdf
+.well-known/
+web/node_modules
+web/.next
+web/.env*.local
+web/.vercel
+web//out/
+web/yarn-error.log*
+documents/*
+logs/*
+.vscode/
+*.DS_Store
+.DS_Store

@@ -1,0 +1,78 @@
+version: '2.2'
+services:
+  elasticsearch:
+    image: custom-elastic
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - cluster.name=single-cluster
+      - bootstrap.memory_lock=true
+      # - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xmx2g -Xms2g"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+      interval: 20s
+      timeout: 20s
+      retries: 3
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+      - ${PWD}/config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+
+  # Kibana
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.2
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - elastic
+    depends_on:
+      elasticsearch:
+          condition: service_healthy
+
+  # FSCrawler 
+  fscrawler:
+    image: dadoonet/fscrawler
+    container_name: fscrawler
+    volumes:
+      - ${PWD}/config/fscrawler:/root/.fscrawler
+      - ${PWD}/documents:/tmp/documents
+      - ${PWD}/logs/fscrawler:/usr/share/fscrawler/logs
+    environment: 
+      - "FS_JAVA_OPTS=-Dlog4j.configurationFile=/usr/share/fscrawler/config/log4j2.xml"
+    networks: 
+      - elastic
+    command: fscrawler haru --trace
+    depends_on:
+      elasticsearch:
+          condition: service_healthy
+
+  # search Nginx
+  web:
+    image: withsearch-web:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - elastic
+    depends_on:
+      elasticsearch:
+          condition: service_healthy
+
+volumes:
+  esdata01:
+    driver: local
+
+networks:
+  elastic:
+    driver: bridge

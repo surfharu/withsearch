@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+  /* 위아래 여백 없이 가로 중앙에 배치 */
+  margin: 0 auto;   
+  max-width: 700px;
+  padding: 2rem calc((100vw - 1000px) / 2);
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.title {
+  font-weight: normal;
+  font-size: 2em;
+  text-align: center;
+}
+
+.title-sub {
+  text-align: center;
+}
